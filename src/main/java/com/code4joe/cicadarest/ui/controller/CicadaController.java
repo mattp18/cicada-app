@@ -2,6 +2,7 @@ package com.code4joe.cicadarest.ui.controller;
 
 import com.code4joe.cicadarest.backend.persistance.domain.Cicada;
 import com.code4joe.cicadarest.backend.service.CicadaService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,12 +21,14 @@ public class CicadaController {
         this.cicadaService = cicadaService;
     }
 
-    public List<Cicada> findAll() {
-        return (List<Cicada>) cicadaService.getAllCicadas();
+    @GetMapping
+    public ResponseEntity<List<Cicada>> findAll() {
+        List<Cicada> retrievedCicadas = (List<Cicada>) cicadaService.getAllCicadas();
+        return ResponseEntity.ok(retrievedCicadas);
     }
 
     @GetMapping("/{id}")
-    public Optional<Cicada> findById(@PathVariable("id") Long id) {
-        return cicadaService.getCicadaById(id);
+    public ResponseEntity<Optional<Cicada>> findById(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(cicadaService.getCicadaById(id));
     }
 }
